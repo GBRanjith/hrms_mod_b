@@ -12,6 +12,7 @@ abstract final class AppTheme {
         seedColor: AppColors.seed,
         brightness: brightness,
       ),
+      appBarTheme: AppBarTheme(centerTitle: true),
     );
   }
 }

@@ -12,4 +12,6 @@ abstract final class AppConstants {
   static const int receiptImageQuality = 82;
 
   static const Duration splashDuration = Duration(seconds: 2);
+
+  static const int defaultPageSize = 20;
 }

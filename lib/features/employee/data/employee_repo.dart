@@ -14,7 +14,6 @@ class EmployeeRepository {
   static const String empJsonFilePath = "assets/seeds/employees.json";
 
   static Future<void> saveAll() async {
-    if (_employeeBox.isNotEmpty) return;
     await _employeeBox.clear();
     final rawData = await rootBundle.loadString(empJsonFilePath);
     final jsonDecodedItems = jsonDecode(rawData) as List;

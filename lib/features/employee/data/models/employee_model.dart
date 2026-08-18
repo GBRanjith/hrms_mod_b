@@ -24,7 +24,6 @@ class EmployeeModel extends HiveObject {
   @HiveField(7)
   DateTime? dateOfJoining;
 
-
   EmployeeModel({
     this.id,
     this.name,
@@ -64,7 +63,7 @@ class EmployeeModel extends HiveObject {
     id = json['id'];
     name = json['name'];
     email = json['email'];
-    phoneNumber = json['phoneNumber'];
+    phoneNumber = json['phone'];
     designation = json['designation'];
     _departmentValue = json['department'];
     department = Department.fromStorage(_departmentValue);

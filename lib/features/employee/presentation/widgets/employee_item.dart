@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hrms_mod_b/app/router/route_names.dart';
 import 'package:hrms_mod_b/features/employee/data/models/employee_model.dart';
 
 import '../../../../core/theme/app_scaling.dart';
@@ -44,7 +46,9 @@ class EmployeeItem extends StatelessWidget {
           Icons.arrow_forward_ios_rounded,
           color: colorScheme.outlineVariant,
         ),
-        onTap: () {},
+        onTap: () {
+          context.pushNamed(RouteNames.directoryDetail, extra: employee);
+        },
       ),
     );
   }

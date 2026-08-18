@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/employee/data/models/employee_model.dart';
+import '../../features/employee/presentation/screens/employee_detail_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/splash/presentation/bloc/splash_bloc.dart';
 import '../../features/splash/presentation/bloc/splash_event.dart';
@@ -29,6 +31,13 @@ abstract final class AppRouter {
         path: RoutePaths.home,
         name: RouteNames.home,
         builder: (context, state) => const HomeScreen(),
+      ),
+
+      GoRoute(
+        path: RoutePaths.directoryDetail,
+        name: RouteNames.directoryDetail,
+        builder: (context, state) =>
+            EmployeeDetailScreen(employee: state.extra as EmployeeModel),
       ),
     ],
   );

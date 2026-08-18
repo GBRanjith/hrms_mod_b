@@ -34,7 +34,7 @@ class AppErrorWidget extends StatelessWidget {
 
             SizedBox(height: AppScaling.space24),
             if (onRetry != null)
-              CustomButton(
+              AppButton(
                 text: 'Retry',
                 onPressed: onRetry,
                 size: ButtonSize.medium,

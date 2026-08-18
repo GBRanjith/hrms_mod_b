@@ -4,7 +4,7 @@ abstract final class AppConstants {
 
   // Demo credentials
   static const String demoEmployeeId = 'emp001';
-  static const String demoPassword = 'password123';
+  static const String demoPassword = 'Demo@123';
 
   // Delay after the last keystroke before a search is applied.
   static const Duration searchDebounce = Duration(milliseconds: 300);

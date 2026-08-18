@@ -4,7 +4,7 @@ import '../theme/app_scaling.dart';
 
 enum ButtonSize { small, medium, large }
 
-class CustomButton extends StatelessWidget {
+class AppButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final ButtonSize size;
@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
   final EdgeInsets? customPadding;
   final bool isOutlined;
 
-  const CustomButton({
+  const AppButton({
     super.key,
     required this.text,
     this.onPressed,

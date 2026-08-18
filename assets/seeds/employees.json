@@ -1,0 +1,162 @@
+[
+  {
+    "id": "emp001",
+    "name": "Boopathy Ranjith",
+    "email": "ranjith@arche.com",
+    "phone": "8344734427",
+    "designation": "Senior Flutter Developer",
+    "department": "engineering",
+    "reportingManager": "Vikram Subramanian",
+    "dateOfJoining": "2022-11-21"
+  },
+  {
+    "id": "emp002",
+    "name": "Vikram Subramanian",
+    "email": "vikram.s@arche.com",
+    "phone": "9840012002",
+    "designation": "Engineering Manager",
+    "department": "engineering",
+    "reportingManager": "Anitha Rajagopal",
+    "dateOfJoining": "2019-07-01"
+  },
+  {
+    "id": "emp003",
+    "name": "Divya Krishnan",
+    "email": "divya.k@arche.com",
+    "phone": "9840012003",
+    "designation": "Backend Developer",
+    "department": "engineering",
+    "reportingManager": "Vikram Subramanian",
+    "dateOfJoining": "2023-01-09"
+  },
+  {
+    "id": "emp004",
+    "name": "Arun Prakash",
+    "email": "arun.p@arche.com",
+    "phone": "9840012004",
+    "designation": "QA Engineer",
+    "department": "engineering",
+    "reportingManager": "Vikram Subramanian",
+    "dateOfJoining": "2021-11-22"
+  },
+  {
+    "id": "emp005",
+    "name": "Meera Raghavan",
+    "email": "meera.r@arche.com",
+    "phone": "9840012005",
+    "designation": "Lead Product Designer",
+    "department": "design",
+    "reportingManager": "Anitha Rajagopal",
+    "dateOfJoining": "2020-05-18"
+  },
+  {
+    "id": "emp006",
+    "name": "Sanjay Menon",
+    "email": "sanjay.m@arche.com",
+    "phone": "9840012006",
+    "designation": "UI/UX Designer",
+    "department": "design",
+    "reportingManager": "Meera Raghavan",
+    "dateOfJoining": "2023-08-07"
+  },
+  {
+    "id": "emp007",
+    "name": "Anitha Rajagopal",
+    "email": "anitha.r@arche.com",
+    "phone": "9840012007",
+    "designation": "Vice President, Operations",
+    "department": "leadership",
+    "reportingManager": "Board of Directors",
+    "dateOfJoining": "2017-02-06"
+  },
+  {
+    "id": "emp008",
+    "name": "Karthik Venkatesan",
+    "email": "karthik.v@arche.com",
+    "phone": "9840012008",
+    "designation": "HR Business Partner",
+    "department": "human_resources",
+    "reportingManager": "Anitha Rajagopal",
+    "dateOfJoining": "2021-04-12"
+  },
+  {
+    "id": "emp009",
+    "name": "Priya Lakshmi",
+    "email": "priya.l@arche.com",
+    "phone": "9840012009",
+    "designation": "Talent Acquisition Specialist",
+    "department": "human_resources",
+    "reportingManager": "Karthik Venkatesan",
+    "dateOfJoining": "2022-09-26"
+  },
+  {
+    "id": "emp010",
+    "name": "Rahul Nair",
+    "email": "rahul.n@arche.com",
+    "phone": "9840012010",
+    "designation": "Finance Controller",
+    "department": "finance",
+    "reportingManager": "Anitha Rajagopal",
+    "dateOfJoining": "2018-10-03"
+  },
+  {
+    "id": "emp011",
+    "name": "Sneha Iyer",
+    "email": "sneha.i@arche.com",
+    "phone": "9840012011",
+    "designation": "Accounts Executive",
+    "department": "finance",
+    "reportingManager": "Rahul Nair",
+    "dateOfJoining": "2023-03-20"
+  },
+  {
+    "id": "emp012",
+    "name": "Gowtham Sundar",
+    "email": "gowtham.s@arche.com",
+    "phone": "9840012012",
+    "designation": "Regional Sales Manager",
+    "department": "sales",
+    "reportingManager": "Anitha Rajagopal",
+    "dateOfJoining": "2020-01-13"
+  },
+  {
+    "id": "emp013",
+    "name": "Fathima Noor",
+    "email": "fathima.n@arche.com",
+    "phone": "9840012013",
+    "designation": "Sales Executive",
+    "department": "sales",
+    "reportingManager": "Gowtham Sundar",
+    "dateOfJoining": "2024-02-05"
+  },
+  {
+    "id": "emp014",
+    "name": "Deepak Chandran",
+    "email": "deepak.c@arche.com",
+    "phone": "9840012014",
+    "designation": "Marketing Lead",
+    "department": "marketing",
+    "reportingManager": "Gowtham Sundar",
+    "dateOfJoining": "2022-06-15"
+  },
+  {
+    "id": "emp015",
+    "name": "Nandhini Selvam",
+    "email": "nandhini.s@arche.com",
+    "phone": "9840012015",
+    "designation": "Content Strategist",
+    "department": "marketing",
+    "reportingManager": "Deepak Chandran",
+    "dateOfJoining": "2024-07-29"
+  },
+  {
+    "id": "emp016",
+    "name": "Hari Kumar",
+    "email": "hari.k@arche.com",
+    "phone": "9840012016",
+    "designation": "IT Support Engineer",
+    "department": "it_support",
+    "reportingManager": "Vikram Subramanian",
+    "dateOfJoining": "2023-11-08"
+  }
+]

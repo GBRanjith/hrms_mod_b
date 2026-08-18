@@ -4,6 +4,7 @@ import '../../../../app/router/route_names.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/enums/status.dart';
 import '../../../../core/storage/preference_service.dart';
+import '../../../employee/data/employee_repo.dart';
 import 'splash_event.dart';
 import 'splash_state.dart';
 
@@ -18,6 +19,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
   ) async {
     emit(state.copyWith(status: Status.loading));
     try {
+      await EmployeeRepository.saveAll();
       await Future<void>.delayed(AppConstants.splashDuration);
       final String nextRouteName = PreferenceService.isLoggedIn
           ? RouteNames.home

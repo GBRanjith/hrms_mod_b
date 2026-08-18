@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-
+import '../../features/employee/data/models/employee_model.dart';
+import '../../features/expense_claim/data/models/expense_claim_model.dart';
 import 'hive_boxes.dart';
 
 abstract final class DatabaseInitializer {
@@ -16,12 +17,12 @@ abstract final class DatabaseInitializer {
   }
 
   static void _registerAdapters() {
-    // Hive.registerAdapter(EmployeeModelAdapter());
-    // Hive.registerAdapter(ExpenseClaimModelAdapter());
+    Hive.registerAdapter(EmployeeModelAdapter());
+    Hive.registerAdapter(ExpenseClaimModelAdapter());
   }
 
   static Future<void> _openBoxes() async {
-    // await Hive.openBox<EmployeeModel>(HiveBoxes.employees);
-    // await Hive.openBox<ExpenseClaimModel>(HiveBoxes.claims);
+    await Hive.openBox<EmployeeModel>(HiveBoxes.employees);
+    await Hive.openBox<ExpenseClaimModel>(HiveBoxes.claims);
   }
 }

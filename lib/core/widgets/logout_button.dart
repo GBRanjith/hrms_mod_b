@@ -46,7 +46,6 @@ class LogoutButton extends StatelessWidget {
   static Future<void> performLogout(BuildContext context) async {
     try {
       PreferenceService.clearSession();
-      DatabaseInitializer.clearAllData();
       if (context.mounted) {
         context.goNamed(RouteNames.login);
       }

@@ -41,8 +41,9 @@ class ClaimRepository {
           (claim.category?.label.toLowerCase().contains(query) ?? false);
 
       final matchesStatus = status == null || claim.status == status;
+      final matchesEmployee = claim.employeeId == PreferenceService.employeeId;
 
-      return matchesSearch && matchesStatus;
+      return matchesSearch && matchesStatus && matchesEmployee;
     }).toList()..sort((a, b) => _compareByDate(a, b, sort));
 
     return claims.skip(start).take(limit ?? claims.length).toList();
@@ -143,7 +144,11 @@ class ClaimRepository {
 
   static int getPendingCount() {
     return _claimBox.values
-        .where((claim) => claim.status?.isPending ?? false)
+        .where(
+          (claim) =>
+              (claim.status?.isPending ?? false) &&
+              (claim.employeeId == PreferenceService.employeeId),
+        )
         .length;
   }
 
@@ -151,7 +156,9 @@ class ClaimRepository {
     return _claimBox.values
         .where(
           (claim) =>
-              claim.status?.isApproved == true && (claim.amount ?? 0) > 0,
+              (claim.employeeId == PreferenceService.employeeId) &&
+              claim.status?.isApproved == true &&
+              (claim.amount ?? 0) > 0,
         )
         .fold(0.0, (sum, claim) => sum + (claim.amount ?? 0));
   }

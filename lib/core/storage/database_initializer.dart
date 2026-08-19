@@ -26,10 +26,4 @@ abstract final class DatabaseInitializer {
     await Hive.openBox<ClaimModel>(HiveBoxes.claims);
   }
 
-  static Future<void> clearAllData() async {
-    try {
-      await Hive.box<EmployeeModel>(HiveBoxes.employees).clear();
-      await Hive.box<ClaimModel>(HiveBoxes.claims).clear();
-    } catch (_) {}
-  }
 }

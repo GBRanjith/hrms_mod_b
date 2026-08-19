@@ -9,6 +9,7 @@ import '../../../../core/widgets/app_empty_widget.dart';
 import '../../../../core/widgets/app_error_widget.dart';
 import '../../../../core/widgets/app_search_field.dart';
 import '../../../../core/widgets/logout_button.dart';
+import '../../../../core/widgets/theme_switch_button.dart';
 import '../bloc/claim_bloc.dart';
 import '../bloc/claim_event.dart';
 import '../bloc/claim_state.dart';
@@ -67,6 +68,7 @@ class _ClaimListViewState extends State<_ClaimListView> {
       appBar: AppBar(
         title: const Text("My Claims"),
         actions: const [LogoutButton()],
+        leading: const ThemeSwitchButton(),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {

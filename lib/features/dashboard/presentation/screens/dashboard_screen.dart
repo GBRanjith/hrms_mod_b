@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hrms_mod_b/core/widgets/theme_switch_button.dart';
 
 import '../../../../app/router/route_names.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -34,7 +35,8 @@ class _DashboardView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Arche HRMS'),
-        actions: [LogoutButton()],
+        actions: const [LogoutButton()],
+        leading: const ThemeSwitchButton(),
       ),
       body: BlocBuilder<DashboardBloc, DashboardState>(
         builder: (context, state) {
@@ -82,10 +84,6 @@ class _DashboardView extends StatelessWidget {
                   subtitle: Text(
                     '${state.totalEmployees}',
                     style: theme.textTheme.headlineSmall,
-                  ),
-                  trailing: TextButton(
-                    onPressed: () {},
-                    child: const Text('View All'),
                   ),
                 ),
               ),

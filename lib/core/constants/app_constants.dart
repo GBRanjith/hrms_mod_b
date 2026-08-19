@@ -15,5 +15,5 @@ abstract final class AppConstants {
 
   static const Duration splashDuration = Duration(seconds: 2);
 
-  static const int defaultPageSize = 20;
+  static const int defaultPageSize = 30;
 }

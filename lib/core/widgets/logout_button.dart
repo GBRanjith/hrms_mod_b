@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hrms_mod_b/app/router/route_names.dart';
-import '../storage/database_initializer.dart';
 import '../storage/preference_service.dart';
 
 class LogoutButton extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hrms_mod_b/core/theme/app_scaling.dart';
 import 'package:hrms_mod_b/core/utils/app_decoratoin.dart';
+import 'package:hrms_mod_b/core/utils/date_extension.dart';
 import 'package:hrms_mod_b/features/employee/data/models/employee_model.dart';
-import 'package:intl/intl.dart';
 
 class EmployeeDetailScreen extends StatelessWidget {
   final EmployeeModel employee;
@@ -126,11 +126,7 @@ class EmployeeDetailScreen extends StatelessWidget {
                   leading: Icon(Icons.calendar_month_outlined),
                   title: Text("Date of Joining"),
                   subtitle: Text(
-                    employee.dateOfJoining != null
-                        ? DateFormat(
-                            'MMMM d, yyyy',
-                          ).format(employee.dateOfJoining!)
-                        : "-",
+                    employee.dateOfJoining?.toShortDate ?? "-",
                     style: textTheme.bodyLarge,
                   ),
                 ),

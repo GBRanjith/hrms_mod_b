@@ -26,6 +26,7 @@ class ExpenseClaimModelAdapter extends TypeAdapter<ExpenseClaimModel> {
       reviewerId: fields[8] as String?,
       reviewDate: fields[9] as DateTime?,
       reviewComments: fields[10] as String?,
+      createdAt: fields[11] as DateTime?,
     )
       .._categoryValue = fields[5] as String?
       .._statusValue = fields[6] as String?;
@@ -34,7 +35,7 @@ class ExpenseClaimModelAdapter extends TypeAdapter<ExpenseClaimModel> {
   @override
   void write(BinaryWriter writer, ExpenseClaimModel obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -56,7 +57,9 @@ class ExpenseClaimModelAdapter extends TypeAdapter<ExpenseClaimModel> {
       ..writeByte(9)
       ..write(obj.reviewDate)
       ..writeByte(10)
-      ..write(obj.reviewComments);
+      ..write(obj.reviewComments)
+      ..writeByte(11)
+      ..write(obj.createdAt);
   }
 
   @override

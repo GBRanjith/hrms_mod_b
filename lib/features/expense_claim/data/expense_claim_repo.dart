@@ -1,0 +1,113 @@
+import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
+import '../../../core/enums/sort_enum.dart';
+import '../../../core/enums/status.dart';
+import '../../../core/storage/hive_boxes.dart';
+import '../../../core/utils/repo_response_model.dart';
+import '../domine/enums/claim_status_enum.dart';
+import 'models/expense_claim_model.dart';
+
+class ExpenseClaimRepository {
+  const ExpenseClaimRepository();
+  static Box<ExpenseClaimModel> get _claimBox =>
+      Hive.box<ExpenseClaimModel>(HiveBoxes.claims);
+
+  static Stream<BoxEvent> watchClaims() => _claimBox.watch();
+
+  static int _compareByDate(
+    ExpenseClaimModel a,
+    ExpenseClaimModel b,
+    Sort sort,
+  ) {
+    final dateA = a.date ?? DateTime(0);
+    final dateB = b.date ?? DateTime(0);
+
+    return sort == Sort.newestFirst
+        ? dateB.compareTo(dateA)
+        : dateA.compareTo(dateB);
+  }
+
+  static List<ExpenseClaimModel> getClaims({
+    String? search,
+    ClaimStatus? status,
+    Sort sort = Sort.newestFirst,
+    int? limit,
+    int? offset,
+  }) {
+    final query = search?.trim().toLowerCase() ?? '';
+    final start = offset != null && offset > 0 ? offset : 0;
+
+    final claims = _claimBox.values.where((claim) {
+      final matchesSearch =
+          query.isEmpty ||
+          (claim.description?.toLowerCase().contains(query) ?? false) ||
+          (claim.category?.label.toLowerCase().contains(query) ?? false);
+
+      final matchesStatus = status == null || claim.status == status;
+
+      return matchesSearch && matchesStatus;
+    }).toList()..sort((a, b) => _compareByDate(a, b, sort));
+
+    return claims.skip(start).take(limit ?? claims.length).toList();
+  }
+
+  static Future<RepoResult> createClaim(ExpenseClaimModel input) async {
+    final id = const Uuid().v4();
+    final claim = ExpenseClaimModel(
+      id: id,
+      employeeId: input.employeeId,
+      category: input.category,
+      amount: input.amount,
+      date: input.date,
+      description: input.description?.trim(),
+      status: ClaimStatus.pending,
+      receiptFileName: input.receiptFileName,
+      createdAt: DateTime.now(),
+    );
+    await _claimBox.put(id, claim);
+    return RepoResult(status: Status.success, message: 'Claim submitted');
+  }
+
+  static Future<RepoResult> updateClaim(ExpenseClaimModel input) async {
+    if (input.id == null) {
+      return RepoResult(status: Status.failure, message: 'Missing claim id');
+    }
+    final existingClaim = _claimBox.get(input.id);
+
+    if (existingClaim == null) {
+      return RepoResult(status: Status.failure, message: 'Claim not found');
+    }
+    final claim = ExpenseClaimModel(
+      id: existingClaim.id,
+      employeeId: input.employeeId,
+      category: input.category,
+      amount: input.amount,
+      date: input.date,
+      description: input.description?.trim(),
+      status: existingClaim.status,
+      receiptFileName: input.receiptFileName,
+      createdAt: existingClaim.createdAt,
+      reviewComments: input.reviewComments,
+      reviewDate: input.reviewDate,
+      reviewerId: input.reviewerId,
+    );
+
+    await _claimBox.put(claim.id, claim);
+    return RepoResult(
+      status: Status.success,
+      message: 'Claim updated successfully',
+    );
+  }
+
+  static Future<RepoResult> deleteClaim(String id) async {
+    final claim = _claimBox.get(id);
+    if (claim?.status == ClaimStatus.approved) {
+      return RepoResult(
+        status: Status.failure,
+        message: 'Claim already approved, cannot delete',
+      );
+    }
+    await _claimBox.delete(id);
+    return RepoResult(status: Status.success, message: 'Claim deleted');
+  }
+}

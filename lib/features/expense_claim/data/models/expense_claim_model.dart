@@ -58,6 +58,9 @@ class ExpenseClaimModel extends HiveObject {
   DateTime? reviewDate;
   @HiveField(10)
   String? reviewComments;
+  @HiveField(11)
+  DateTime? createdAt;
+
   ExpenseClaimModel({
     this.id,
     this.employeeId,
@@ -70,6 +73,7 @@ class ExpenseClaimModel extends HiveObject {
     this.reviewerId,
     this.reviewDate,
     this.reviewComments,
+    this.createdAt,
   }) {
     this.category = category;
     this.status = status;
@@ -87,6 +91,7 @@ class ExpenseClaimModel extends HiveObject {
     String? reviewerId,
     DateTime? reviewDate,
     String? reviewComments,
+    DateTime? createdAt,
   }) {
     return ExpenseClaimModel(
       id: id ?? this.id,
@@ -100,6 +105,7 @@ class ExpenseClaimModel extends HiveObject {
       reviewerId: reviewerId ?? this.reviewerId,
       reviewDate: reviewDate ?? this.reviewDate,
       reviewComments: reviewComments ?? this.reviewComments,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }

@@ -173,7 +173,6 @@ class ClaimBloc extends Bloc<ClaimEvent, ClaimState> {
         emit(state.copyWith(status: Status.failure, message: result.message));
         return;
       }
-
       emit(state.copyWith(status: Status.success, message: result.message));
     } catch (e) {
       emit(

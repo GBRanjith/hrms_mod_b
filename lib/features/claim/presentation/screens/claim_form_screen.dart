@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hrms_mod_b/core/utils/date_extension.dart';
 import 'package:hrms_mod_b/core/widgets/app_button.dart';
 import 'package:hrms_mod_b/core/widgets/app_filter_chips.dart';
 import 'package:hrms_mod_b/core/widgets/app_textfield.dart';
+import '../../../../app/router/route_names.dart';
 import '../../../../core/theme/app_scaling.dart';
 import '../../../../core/utils/extension.dart';
 import '../../domine/enums/expense_category_enum.dart';
@@ -81,30 +83,6 @@ class _ClaimFormViewState extends State<_ClaimFormView> {
     );
   }
 
-  Future<void> _confirmDelete() async {
-    final bloc = context.read<ClaimFormBloc>();
-
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('Delete this claim?'),
-        content: const Text('This cannot be undone.'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true) bloc.add(ClaimFormDeleted());
-  }
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -113,13 +91,20 @@ class _ClaimFormViewState extends State<_ClaimFormView> {
         _prefill(state);
 
         if (state.status.isSuccess) {
-          Navigator.of(context).pop();
+          final message = state.message ?? 'Saved';
+          if (state.isEditing) {
+            context.pop();
+          } else {
+            context.pushReplacementNamed(
+              RouteNames.claimDetail,
+              pathParameters: {'id': state.claim.id ?? ''},
+            );
+          }
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(state.message ?? 'Saved')));
+            ..showSnackBar(SnackBar(content: Text(message)));
           return;
         }
-
         if (state.message != null) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -130,14 +115,6 @@ class _ClaimFormViewState extends State<_ClaimFormView> {
         return Scaffold(
           appBar: AppBar(
             title: Text(state.isEditing ? 'Edit Claim' : 'New Claim'),
-            actions: [
-              if (state.isEditing)
-                IconButton(
-                  tooltip: 'Delete',
-                  icon: const Icon(Icons.delete_outline),
-                  onPressed: _confirmDelete,
-                ),
-            ],
           ),
           body: Form(
             key: _formKey,

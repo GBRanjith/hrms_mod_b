@@ -1,6 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/claim/presentation/bloc/claim_bloc.dart';
+import '../../features/claim/presentation/bloc/claim_event.dart';
+import '../../features/claim/presentation/screens/claim_detail_screen.dart';
 import '../../features/claim/presentation/screens/claim_form_screen.dart';
 import '../../features/employee/data/models/employee_model.dart';
 import '../../features/employee/presentation/screens/employee_detail_screen.dart';
@@ -28,28 +31,41 @@ abstract final class AppRouter {
         name: RouteNames.login,
         builder: (context, state) => const LoginScreen(),
       ),
-      GoRoute(
-        path: RoutePaths.home,
-        name: RouteNames.home,
-        builder: (context, state) => const HomeScreen(),
-      ),
-
-      GoRoute(
-        path: RoutePaths.directoryDetail,
-        name: RouteNames.directoryDetail,
-        builder: (context, state) =>
-            EmployeeDetailScreen(employee: state.extra as EmployeeModel),
-      ),
-      GoRoute(
-        path: RoutePaths.createClaim,
-        name: RouteNames.createClaim,
-        builder: (context, state) => const ClaimFormScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.editClaim,
-        name: RouteNames.editClaim,
-        builder: (context, state) =>
-            ClaimFormScreen(claimId: state.pathParameters['id']),
+      ShellRoute(
+        builder: (context, state, child) => BlocProvider(
+          create: (_) => ClaimBloc()..add(ClaimStarted()),
+          child: child,
+        ),
+        routes: [
+          GoRoute(
+            path: RoutePaths.home,
+            name: RouteNames.home,
+            builder: (context, state) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: RoutePaths.directoryDetail,
+            name: RouteNames.directoryDetail,
+            builder: (context, state) =>
+                EmployeeDetailScreen(employee: state.extra as EmployeeModel),
+          ),
+          GoRoute(
+            path: RoutePaths.createClaim,
+            name: RouteNames.createClaim,
+            builder: (context, state) => const ClaimFormScreen(),
+          ),
+          GoRoute(
+            path: RoutePaths.editClaim,
+            name: RouteNames.editClaim,
+            builder: (context, state) =>
+                ClaimFormScreen(claimId: state.pathParameters['id']),
+          ),
+          GoRoute(
+            path: RoutePaths.claimDetail,
+            name: RouteNames.claimDetail,
+            builder: (context, state) =>
+                ClaimDetailScreen(claimId: state.pathParameters['id'] ?? ''),
+          ),
+        ],
       ),
     ],
   );

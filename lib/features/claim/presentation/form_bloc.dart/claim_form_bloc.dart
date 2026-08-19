@@ -72,7 +72,7 @@ class ClaimFormBloc extends Bloc<ClaimFormEvent, ClaimFormState> {
       emit(
         state.copyWith(
           clearPickedReceipt: true,
-          claim: state.claim.copyWith(receiptFileName: null),
+          claim: state.claim.copyWith(clearReceiptFileName: true),
         ),
       );
       return;

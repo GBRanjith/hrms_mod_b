@@ -51,7 +51,7 @@ class ClaimRepository {
   static ClaimModel? getClaimById(String id) => _claimBox.get(id);
 
   static Future<RepoResult> createClaim(ClaimModel input) async {
-    final id = const Uuid().v4();
+    final id = input.id ?? const Uuid().v4();
     final claim = ClaimModel(
       id: id,
       employeeId: input.employeeId,
@@ -134,4 +134,6 @@ class ClaimRepository {
     await _claimBox.delete(id);
     return RepoResult(status: Status.success, message: 'Claim deleted');
   }
+
+  static bool canEdit(ClaimModel claim) => claim.status?.isPending ?? false;
 }

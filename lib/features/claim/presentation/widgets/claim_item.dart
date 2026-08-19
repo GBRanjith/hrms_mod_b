@@ -49,6 +49,8 @@ class ClaimItem extends StatelessWidget {
                       Text(
                         claim.description ?? '-',
                         style: Theme.of(context).textTheme.bodyLarge,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     if (claim.reviewComments?.isNotEmpty == true)
                       Text(

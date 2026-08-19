@@ -7,10 +7,14 @@ class AppFilterChips<T> extends StatelessWidget {
     required this.items,
     required this.selected,
     required this.onSelected,
+    this.allLabel = 'All',
+    this.labelOf,
   });
 
   final List<T> items;
   final T? selected;
+  final String allLabel;
+  final String Function(T item)? labelOf;
   final ValueChanged<T?> onSelected;
 
   @override
@@ -21,8 +25,10 @@ class AppFilterChips<T> extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: AppScaling.space16),
         children: [
-          _chip('All', null),
-          ...items.map((item) => _chip(item.toString(), item)),
+          _chip(allLabel, null),
+          ...items.map(
+            (item) => _chip(labelOf?.call(item) ?? item.toString(), item),
+          ),
         ],
       ),
     );
@@ -32,7 +38,7 @@ class AppFilterChips<T> extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: AppScaling.space4),
       child: FilterChip(
-        padding: const EdgeInsets.all(0),
+        padding: EdgeInsets.zero,
         visualDensity: VisualDensity.compact,
         label: Text(label),
         selected: selected == value,

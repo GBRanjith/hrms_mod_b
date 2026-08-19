@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/widgets/logout_button.dart';
-import '../../../claims/presentation/screens/claim_list_screen.dart';
 import '../../../dashboard/presentation/screens/dashboard_screen.dart';
 import '../../../employee/presentation/screens/employee_list_screen.dart';
+import '../../../expense_claim/presentation/screens/expense_claim_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const List<Widget> _tabs = [
     DashboardScreen(),
     EmployeeListScreen(),
-    ClaimListScreen(),
+    ExpenseClaimListScreen(),
   ];
   @override
   Widget build(BuildContext context) {

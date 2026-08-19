@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:hrms_mod_b/core/constants/app_constants.dart';
 import 'package:hrms_mod_b/core/theme/app_scaling.dart';
 import 'package:hrms_mod_b/core/widgets/app_empty_widget.dart';

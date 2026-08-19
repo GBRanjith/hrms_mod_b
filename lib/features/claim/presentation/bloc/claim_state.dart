@@ -1,20 +1,20 @@
 import 'package:equatable/equatable.dart';
 import '../../../../core/enums/sort_enum.dart';
 import '../../../../core/enums/status.dart';
-import '../../data/models/expense_claim_model.dart';
-import '../enums/claim_status_enum.dart';
+import '../../data/models/claim_model.dart';
+import '../../domine/enums/claim_status_enum.dart';
 
-class ExpenseClaimState extends Equatable {
+class ClaimState extends Equatable {
   final Status status;
   final String? message;
-  final List<ExpenseClaimModel> claims;
+  final List<ClaimModel> claims;
   final String search;
   final ClaimStatus? claimStatus;
   final Sort sort;
   final bool hasMore;
   final bool isLoadingMore;
 
-  const ExpenseClaimState({
+  const ClaimState({
     this.status = Status.initial,
     this.message,
     this.claims = const [],
@@ -24,8 +24,8 @@ class ExpenseClaimState extends Equatable {
     this.hasMore = true,
     this.isLoadingMore = false,
   });
-  ExpenseClaimState clearStatus() {
-    return ExpenseClaimState(
+  ClaimState clearStatus() {
+    return ClaimState(
       status: status,
       message: message,
       claims: claims,
@@ -37,17 +37,17 @@ class ExpenseClaimState extends Equatable {
     );
   }
 
-  ExpenseClaimState copyWith({
+  ClaimState copyWith({
     Status? status,
     String? message,
-    List<ExpenseClaimModel>? claims,
+    List<ClaimModel>? claims,
     String? search,
     ClaimStatus? claimStatus,
     Sort? sort,
     bool? hasMore,
     bool? isLoadingMore,
   }) {
-    return ExpenseClaimState(
+    return ClaimState(
       status: status ?? this.status,
       message: message,
       claims: claims ?? this.claims,

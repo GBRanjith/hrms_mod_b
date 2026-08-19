@@ -2,21 +2,21 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/enums/status.dart';
-import '../../data/expense_claim_repo.dart';
-import 'expense_claim_event.dart';
-import 'expense_claim_state.dart';
+import '../../data/claim_repo.dart';
+import 'claim_event.dart';
+import 'claim_state.dart';
 
-class ExpenseClaimBloc extends Bloc<ExpenseClaimEvent, ExpenseClaimState> {
-  ExpenseClaimBloc() : super(const ExpenseClaimState()) {
-    on<ExpenseClaimStarted>(_onStarted);
-    on<ExpenseClaimRefreshed>(_onRefreshed);
-    on<ExpenseClaimSearched>(_onSearched);
-    on<ExpenseClaimStatusSelected>(_onStatusSelected);
-    on<ExpenseClaimSortChanged>(_onSortChanged);
-    on<ExpenseClaimLoadMore>(_onLoadMore);
-    on<ExpenseClaimCreated>(_onCreated);
-    on<ExpenseClaimUpdated>(_onUpdated);
-    on<ExpenseClaimDeleted>(_onDeleted);
+class ClaimBloc extends Bloc<ClaimEvent, ClaimState> {
+  ClaimBloc() : super(const ClaimState()) {
+    on<ClaimStarted>(_onStarted);
+    on<ClaimRefreshed>(_onRefreshed);
+    on<ClaimSearched>(_onSearched);
+    on<ClaimStatusSelected>(_onStatusSelected);
+    on<ClaimSortChanged>(_onSortChanged);
+    on<ClaimLoadMore>(_onLoadMore);
+    on<ClaimCreated>(_onCreated);
+    on<ClaimUpdated>(_onUpdated);
+    on<ClaimDeleted>(_onDeleted);
 
     _watchClaims();
   }
@@ -24,15 +24,12 @@ class ExpenseClaimBloc extends Bloc<ExpenseClaimEvent, ExpenseClaimState> {
   StreamSubscription? _claimsSubscription;
 
   void _watchClaims() {
-    _claimsSubscription = ExpenseClaimRepository.watchClaims().listen((_) {
-      add(ExpenseClaimRefreshed());
+    _claimsSubscription = ClaimRepository.watchClaims().listen((_) {
+      add(ClaimRefreshed());
     });
   }
 
-  void _loadFirstPage(
-    ExpenseClaimState nextState,
-    Emitter<ExpenseClaimState> emit,
-  ) {
+  void _loadFirstPage(ClaimState nextState, Emitter<ClaimState> emit) {
     emit(
       nextState.copyWith(
         status: Status.loading,
@@ -44,7 +41,7 @@ class ExpenseClaimBloc extends Bloc<ExpenseClaimEvent, ExpenseClaimState> {
     );
 
     try {
-      final claims = ExpenseClaimRepository.getClaims(
+      final claims = ClaimRepository.getClaims(
         search: nextState.search,
         status: nextState.claimStatus,
         sort: nextState.sort,
@@ -70,28 +67,19 @@ class ExpenseClaimBloc extends Bloc<ExpenseClaimEvent, ExpenseClaimState> {
     }
   }
 
-  void _onStarted(ExpenseClaimStarted event, Emitter<ExpenseClaimState> emit) {
+  void _onStarted(ClaimStarted event, Emitter<ClaimState> emit) {
     _loadFirstPage(state, emit);
   }
 
-  void _onRefreshed(
-    ExpenseClaimRefreshed event,
-    Emitter<ExpenseClaimState> emit,
-  ) {
+  void _onRefreshed(ClaimRefreshed event, Emitter<ClaimState> emit) {
     _loadFirstPage(state, emit);
   }
 
-  void _onSearched(
-    ExpenseClaimSearched event,
-    Emitter<ExpenseClaimState> emit,
-  ) {
+  void _onSearched(ClaimSearched event, Emitter<ClaimState> emit) {
     _loadFirstPage(state.copyWith(search: event.search.trim()), emit);
   }
 
-  void _onStatusSelected(
-    ExpenseClaimStatusSelected event,
-    Emitter<ExpenseClaimState> emit,
-  ) {
+  void _onStatusSelected(ClaimStatusSelected event, Emitter<ClaimState> emit) {
     final nextState = event.status == null
         ? state.clearStatus()
         : state.copyWith(claimStatus: event.status);
@@ -99,17 +87,11 @@ class ExpenseClaimBloc extends Bloc<ExpenseClaimEvent, ExpenseClaimState> {
     _loadFirstPage(nextState, emit);
   }
 
-  void _onSortChanged(
-    ExpenseClaimSortChanged event,
-    Emitter<ExpenseClaimState> emit,
-  ) {
+  void _onSortChanged(ClaimSortChanged event, Emitter<ClaimState> emit) {
     _loadFirstPage(state.copyWith(sort: event.sort), emit);
   }
 
-  void _onLoadMore(
-    ExpenseClaimLoadMore event,
-    Emitter<ExpenseClaimState> emit,
-  ) {
+  void _onLoadMore(ClaimLoadMore event, Emitter<ClaimState> emit) {
     if (!state.hasMore || state.isLoadingMore) {
       return;
     }
@@ -117,7 +99,7 @@ class ExpenseClaimBloc extends Bloc<ExpenseClaimEvent, ExpenseClaimState> {
     emit(state.copyWith(isLoadingMore: true, message: null));
 
     try {
-      final claims = ExpenseClaimRepository.getClaims(
+      final claims = ClaimRepository.getClaims(
         search: state.search,
         status: state.claimStatus,
         sort: state.sort,
@@ -143,12 +125,9 @@ class ExpenseClaimBloc extends Bloc<ExpenseClaimEvent, ExpenseClaimState> {
     }
   }
 
-  Future<void> _onCreated(
-    ExpenseClaimCreated event,
-    Emitter<ExpenseClaimState> emit,
-  ) async {
+  Future<void> _onCreated(ClaimCreated event, Emitter<ClaimState> emit) async {
     try {
-      final result = await ExpenseClaimRepository.createClaim(event.claim);
+      final result = await ClaimRepository.createClaim(event.claim);
 
       if (result.status.isFailure) {
         emit(state.copyWith(status: Status.failure, message: result.message));
@@ -165,12 +144,9 @@ class ExpenseClaimBloc extends Bloc<ExpenseClaimEvent, ExpenseClaimState> {
     }
   }
 
-  Future<void> _onUpdated(
-    ExpenseClaimUpdated event,
-    Emitter<ExpenseClaimState> emit,
-  ) async {
+  Future<void> _onUpdated(ClaimUpdated event, Emitter<ClaimState> emit) async {
     try {
-      final result = await ExpenseClaimRepository.updateClaim(event.claim);
+      final result = await ClaimRepository.updateClaim(event.claim);
 
       if (result.status.isFailure) {
         emit(state.copyWith(status: Status.failure, message: result.message));
@@ -188,12 +164,9 @@ class ExpenseClaimBloc extends Bloc<ExpenseClaimEvent, ExpenseClaimState> {
     }
   }
 
-  Future<void> _onDeleted(
-    ExpenseClaimDeleted event,
-    Emitter<ExpenseClaimState> emit,
-  ) async {
+  Future<void> _onDeleted(ClaimDeleted event, Emitter<ClaimState> emit) async {
     try {
-      final result = await ExpenseClaimRepository.deleteClaim(event.id);
+      final result = await ClaimRepository.deleteClaim(event.id);
 
       if (result.status.isFailure) {
         emit(state.copyWith(status: Status.failure, message: result.message));

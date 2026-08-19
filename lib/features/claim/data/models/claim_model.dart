@@ -4,10 +4,10 @@ import '../../../../core/storage/hive_typeids.dart';
 import '../../domine/enums/claim_status_enum.dart';
 import '../../domine/enums/expense_category_enum.dart';
 
-part 'expense_claim_model.g.dart';
+part 'claim_model.g.dart';
 
-@HiveType(typeId: HiveTypeIds.expenseClaim)
-class ExpenseClaimModel extends HiveObject {
+@HiveType(typeId: HiveTypeIds.claim)
+class ClaimModel extends HiveObject {
   @HiveField(0)
   String? id;
   @HiveField(1)
@@ -61,7 +61,7 @@ class ExpenseClaimModel extends HiveObject {
   @HiveField(11)
   DateTime? createdAt;
 
-  ExpenseClaimModel({
+  ClaimModel({
     this.id,
     this.employeeId,
     this.description,
@@ -79,7 +79,7 @@ class ExpenseClaimModel extends HiveObject {
     this.status = status;
   }
 
-  ExpenseClaimModel copyWith({
+  ClaimModel copyWith({
     String? id,
     String? employeeId,
     String? description,
@@ -93,7 +93,7 @@ class ExpenseClaimModel extends HiveObject {
     String? reviewComments,
     DateTime? createdAt,
   }) {
-    return ExpenseClaimModel(
+    return ClaimModel(
       id: id ?? this.id,
       employeeId: employeeId ?? this.employeeId,
       description: description ?? this.description,

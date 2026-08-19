@@ -5,32 +5,32 @@ import '../../../../core/theme/app_scaling.dart';
 import '../../../../core/widgets/app_empty_widget.dart';
 import '../../../../core/widgets/app_error_widget.dart';
 import '../../../../core/widgets/app_search_field.dart';
-import '../../domine/bloc/expense_claim_bloc.dart';
-import '../../domine/bloc/expense_claim_event.dart';
-import '../../domine/bloc/expense_claim_state.dart';
+import '../bloc/claim_bloc.dart';
+import '../bloc/claim_event.dart';
+import '../bloc/claim_state.dart';
 import '../widgets/claim_item.dart';
 import '../widgets/claim_status_filter.dart';
 
-class ExpenseClaimListScreen extends StatelessWidget {
-  const ExpenseClaimListScreen({super.key});
+class ClaimListScreen extends StatelessWidget {
+  const ClaimListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ExpenseClaimBloc()..add(ExpenseClaimStarted()),
-      child: const _ExpenseClaimListView(),
+      create: (_) => ClaimBloc()..add(ClaimStarted()),
+      child: const _ClaimListView(),
     );
   }
 }
 
-class _ExpenseClaimListView extends StatefulWidget {
-  const _ExpenseClaimListView();
+class _ClaimListView extends StatefulWidget {
+  const _ClaimListView();
 
   @override
-  State<_ExpenseClaimListView> createState() => _ExpenseClaimListViewState();
+  State<_ClaimListView> createState() => _ClaimListViewState();
 }
 
-class _ExpenseClaimListViewState extends State<_ExpenseClaimListView> {
+class _ClaimListViewState extends State<_ClaimListView> {
   late final ScrollController _scrollController;
 
   @override
@@ -45,7 +45,7 @@ class _ExpenseClaimListViewState extends State<_ExpenseClaimListView> {
 
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 300) {
-      context.read<ExpenseClaimBloc>().add(ExpenseClaimLoadMore());
+      context.read<ClaimBloc>().add(ClaimLoadMore());
     }
   }
 
@@ -62,9 +62,7 @@ class _ExpenseClaimListViewState extends State<_ExpenseClaimListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigate to create claim
-        },
+        onPressed: () {},
         child: const Icon(Icons.add),
       ),
       body: Column(
@@ -75,9 +73,7 @@ class _ExpenseClaimListViewState extends State<_ExpenseClaimListView> {
               hintText: 'Search claims...',
               debounce: AppConstants.searchDebounce,
               onChanged: (value) {
-                context.read<ExpenseClaimBloc>().add(
-                  ExpenseClaimSearched(value ?? ''),
-                );
+                context.read<ClaimBloc>().add(ClaimSearched(value ?? ''));
               },
             ),
           ),
@@ -85,7 +81,7 @@ class _ExpenseClaimListViewState extends State<_ExpenseClaimListView> {
           const ClaimStatusFilter(),
 
           Expanded(
-            child: BlocConsumer<ExpenseClaimBloc, ExpenseClaimState>(
+            child: BlocConsumer<ClaimBloc, ClaimState>(
               listener: (context, state) {
                 if (state.status.isFailure && state.claims.isNotEmpty) {
                   ScaffoldMessenger.of(context)
@@ -106,9 +102,7 @@ class _ExpenseClaimListViewState extends State<_ExpenseClaimListView> {
                   return AppErrorWidget(
                     message: state.message,
                     onRetry: () {
-                      context.read<ExpenseClaimBloc>().add(
-                        ExpenseClaimRefreshed(),
-                      );
+                      context.read<ClaimBloc>().add(ClaimRefreshed());
                     },
                   );
                 }
@@ -119,9 +113,7 @@ class _ExpenseClaimListViewState extends State<_ExpenseClaimListView> {
 
                 return RefreshIndicator(
                   onRefresh: () async {
-                    context.read<ExpenseClaimBloc>().add(
-                      ExpenseClaimRefreshed(),
-                    );
+                    context.read<ClaimBloc>().add(ClaimRefreshed());
                   },
                   child: ListView.builder(
                     controller: _scrollController,

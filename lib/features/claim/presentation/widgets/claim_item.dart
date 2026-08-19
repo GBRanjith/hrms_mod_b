@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_scaling.dart';
-import '../../data/models/expense_claim_model.dart';
+import '../../data/models/claim_model.dart';
 
 class ClaimItem extends StatelessWidget {
   const ClaimItem({super.key, required this.claim});
 
-  final ExpenseClaimModel claim;
+  final ClaimModel claim;
 
   @override
   Widget build(BuildContext context) {

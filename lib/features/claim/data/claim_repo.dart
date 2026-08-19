@@ -5,20 +5,16 @@ import '../../../core/enums/status.dart';
 import '../../../core/storage/hive_boxes.dart';
 import '../../../core/utils/repo_response_model.dart';
 import '../domine/enums/claim_status_enum.dart';
-import 'models/expense_claim_model.dart';
+import 'models/claim_model.dart';
 
-class ExpenseClaimRepository {
-  const ExpenseClaimRepository();
-  static Box<ExpenseClaimModel> get _claimBox =>
-      Hive.box<ExpenseClaimModel>(HiveBoxes.claims);
+class ClaimRepository {
+  const ClaimRepository();
+  static Box<ClaimModel> get _claimBox =>
+      Hive.box<ClaimModel>(HiveBoxes.claims);
 
   static Stream<BoxEvent> watchClaims() => _claimBox.watch();
 
-  static int _compareByDate(
-    ExpenseClaimModel a,
-    ExpenseClaimModel b,
-    Sort sort,
-  ) {
+  static int _compareByDate(ClaimModel a, ClaimModel b, Sort sort) {
     final dateA = a.date ?? DateTime(0);
     final dateB = b.date ?? DateTime(0);
 
@@ -27,7 +23,7 @@ class ExpenseClaimRepository {
         : dateA.compareTo(dateB);
   }
 
-  static List<ExpenseClaimModel> getClaims({
+  static List<ClaimModel> getClaims({
     String? search,
     ClaimStatus? status,
     Sort sort = Sort.newestFirst,
@@ -51,9 +47,9 @@ class ExpenseClaimRepository {
     return claims.skip(start).take(limit ?? claims.length).toList();
   }
 
-  static Future<RepoResult> createClaim(ExpenseClaimModel input) async {
+  static Future<RepoResult> createClaim(ClaimModel input) async {
     final id = const Uuid().v4();
-    final claim = ExpenseClaimModel(
+    final claim = ClaimModel(
       id: id,
       employeeId: input.employeeId,
       category: input.category,
@@ -68,7 +64,7 @@ class ExpenseClaimRepository {
     return RepoResult(status: Status.success, message: 'Claim submitted');
   }
 
-  static Future<RepoResult> updateClaim(ExpenseClaimModel input) async {
+  static Future<RepoResult> updateClaim(ClaimModel input) async {
     if (input.id == null) {
       return RepoResult(status: Status.failure, message: 'Missing claim id');
     }
@@ -77,7 +73,7 @@ class ExpenseClaimRepository {
     if (existingClaim == null) {
       return RepoResult(status: Status.failure, message: 'Claim not found');
     }
-    final claim = ExpenseClaimModel(
+    final claim = ClaimModel(
       id: existingClaim.id,
       employeeId: input.employeeId,
       category: input.category,

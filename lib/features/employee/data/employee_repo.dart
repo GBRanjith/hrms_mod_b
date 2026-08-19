@@ -46,6 +46,10 @@ class EmployeeRepository {
     return employees.skip(start).take(limit ?? employees.length).toList();
   }
 
+  static int getEmployeesCount() {
+    return _employeeBox.values.length;
+  }
+
   static EmployeeModel? getEmployeeByEmpId(String id) {
     for (var employee in _employeeBox.values) {
       if (employee.id == id) {

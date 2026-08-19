@@ -8,6 +8,7 @@ import '../../../../core/theme/app_scaling.dart';
 import '../../../../core/widgets/app_empty_widget.dart';
 import '../../../../core/widgets/app_error_widget.dart';
 import '../../../../core/widgets/app_search_field.dart';
+import '../../../../core/widgets/logout_button.dart';
 import '../bloc/claim_bloc.dart';
 import '../bloc/claim_event.dart';
 import '../bloc/claim_state.dart';
@@ -63,6 +64,10 @@ class _ClaimListViewState extends State<_ClaimListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("My Claims"),
+        actions: const [LogoutButton()],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           context.pushNamed(RouteNames.createClaim);

@@ -48,6 +48,10 @@ class ClaimRepository {
     return claims.skip(start).take(limit ?? claims.length).toList();
   }
 
+  static List<ClaimModel> getEmployeeClaims(String id) {
+    return _claimBox.values.where((claim) => claim.employeeId == id).toList();
+  }
+
   static ClaimModel? getClaimById(String id) => _claimBox.get(id);
 
   static Future<RepoResult> createClaim(ClaimModel input) async {
@@ -136,4 +140,19 @@ class ClaimRepository {
   }
 
   static bool canEdit(ClaimModel claim) => claim.status?.isPending ?? false;
+
+  static int getPendingCount() {
+    return _claimBox.values
+        .where((claim) => claim.status?.isPending ?? false)
+        .length;
+  }
+
+  static double getApprovedAmount() {
+    return _claimBox.values
+        .where(
+          (claim) =>
+              claim.status?.isApproved == true && (claim.amount ?? 0) > 0,
+        )
+        .fold(0.0, (sum, claim) => sum + (claim.amount ?? 0));
+  }
 }

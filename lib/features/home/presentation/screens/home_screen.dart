@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_constants.dart';
-import '../../../../core/widgets/logout_button.dart';
 import '../../../dashboard/presentation/screens/dashboard_screen.dart';
 import '../../../employee/presentation/screens/employee_list_screen.dart';
 import '../../../claim/presentation/screens/claim_list_screen.dart';
@@ -23,10 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppConstants.appName),
-        actions: const [LogoutButton()],
-      ),
       body: IndexedStack(index: _index, children: _tabs),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,

@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hrms_mod_b/core/storage/preference_service.dart';
 import 'package:hrms_mod_b/core/theme/app_scaling.dart';
 import 'package:hrms_mod_b/core/utils/app_decoratoin.dart';
 import 'package:hrms_mod_b/core/utils/date_extension.dart';
 import 'package:hrms_mod_b/features/employee/data/models/employee_model.dart';
+
+import '../../../../app/router/route_names.dart';
+import '../../../claim/data/claim_repo.dart';
+import '../../../claim/data/models/claim_model.dart';
+import '../../../claim/presentation/widgets/claim_item.dart';
 
 class EmployeeDetailScreen extends StatelessWidget {
   final EmployeeModel employee;
@@ -12,10 +19,12 @@ class EmployeeDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final List<ClaimModel> claims = ClaimRepository.getEmployeeClaims(
+      employee.id ?? "",
+    );
     return Scaffold(
       appBar: AppBar(title: Text("Employee Detail"), centerTitle: false),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
           Container(
             margin: EdgeInsets.all(AppScaling.space12),
@@ -133,6 +142,39 @@ class EmployeeDetailScreen extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: AppScaling.space12),
+          if (PreferenceService.employeeId == employee.id) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppScaling.space16,
+              ),
+              child: Text(
+                "Expense Claims",
+                style: textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: claims.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.all(AppScaling.space16),
+              itemBuilder: (context, index) {
+                return ClaimItem(
+                  claim: claims[index],
+                  onLongPress: null,
+                  onTap: () {
+                    context.pushNamed(
+                      RouteNames.claimDetail,
+                      pathParameters: {'id': claims[index].id ?? ''},
+                    );
+                  },
+                );
+              },
+            ),
+          ],
         ],
       ),
     );

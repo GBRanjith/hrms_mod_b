@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hrms_mod_b/features/employee/presentation/screens/employee_list_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/claim/presentation/bloc/claim_bloc.dart';
 import '../../features/claim/presentation/bloc/claim_event.dart';
@@ -30,6 +31,11 @@ abstract final class AppRouter {
         path: RoutePaths.login,
         name: RouteNames.login,
         builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.directory,
+        name: RouteNames.directory,
+        builder: (context, state) => const EmployeeListScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) => BlocProvider(

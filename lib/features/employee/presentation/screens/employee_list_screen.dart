@@ -6,6 +6,7 @@ import 'package:hrms_mod_b/core/widgets/app_empty_widget.dart';
 import 'package:hrms_mod_b/core/widgets/app_error_widget.dart';
 import 'package:hrms_mod_b/core/widgets/app_search_field.dart';
 
+import '../../../../core/widgets/logout_button.dart';
 import '../bloc/employee_bloc.dart';
 import '../bloc/employee_event.dart';
 import '../bloc/employee_state.dart';
@@ -63,6 +64,10 @@ class _EmployeeListViewState extends State<_EmployeeListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Employee Directory"),
+        actions: const [LogoutButton()],
+      ),
       body: Column(
         children: [
           Padding(

@@ -88,7 +88,7 @@ class ClaimModel extends HiveObject {
     ExpenseCategory? category,
     ClaimStatus? status,
     String? receiptFileName,
-    bool clearReceiptFileName = false, // ← add
+    bool clearReceiptFileName = false,
     String? reviewerId,
     DateTime? reviewDate,
     String? reviewComments,

@@ -1,5 +1,6 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hrms_mod_b/core/widgets/app_textfield.dart';
 import 'package:hrms_mod_b/features/claim/presentation/widgets/claim_status_ui.dart';
 import '../../../../core/theme/app_scaling.dart';
 import '../../data/models/claim_model.dart';
@@ -7,53 +8,105 @@ import '../../domine/enums/claim_status_enum.dart';
 import '../bloc/claim_bloc.dart';
 import '../bloc/claim_event.dart';
 
-Future<void> showReviewSheet({required BuildContext context, required ClaimModel claim}) async {
-    final bloc = context.read<ClaimBloc>();
-    final chosen = await showModalBottomSheet<ClaimStatus>(
-      context: context,
-      showDragHandle: true,
-      builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppScaling.space16,
-                0,
-                AppScaling.space16,
-                AppScaling.space8,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Simulate manager review',
-                    style: Theme.of(sheetContext).textTheme.titleMedium,
-                  ),
-                  Text(
-                    'Demo shortcut — this module has no manager login.',
-                    style: Theme.of(sheetContext).textTheme.bodySmall,
-                  ),
-                ],
-              ),
+Future<void> showReviewSheet({
+  required BuildContext context,
+  required ClaimModel claim,
+}) async {
+  final bloc = context.read<ClaimBloc>();
+  final chosen = await showModalBottomSheet<ClaimStatus>(
+    context: context,
+    showDragHandle: true,
+    builder: (sheetContext) => SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppScaling.space16,
+              0,
+              AppScaling.space16,
+              AppScaling.space8,
             ),
-            ...ClaimStatus.values.map(
-              (status) => ListTile(
-                leading: Icon(status.icon, color: status.color(sheetContext)),
-                title: Text(status.label),
-                subtitle: status == claim.status
-                    ? const Text('Current status')
-                    : null,
-                enabled: status != claim.status,
-                onTap: () => Navigator.of(sheetContext).pop(status),
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Simulate manager review',
+                  style: Theme.of(sheetContext).textTheme.titleMedium,
+                ),
+                Text(
+                  'Demo shortcut — this module has no manager login.',
+                  style: Theme.of(sheetContext).textTheme.bodySmall,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          ...ClaimStatus.values.map(
+            (status) => ListTile(
+              leading: Icon(status.icon, color: status.color(sheetContext)),
+              title: Text(status.label),
+              subtitle: status == claim.status
+                  ? const Text('Current status')
+                  : null,
+              enabled: status != claim.status,
+              onTap: () => Navigator.of(sheetContext).pop(status),
+            ),
+          ),
+        ],
       ),
-    );
+    ),
+  );
 
-    if (chosen == null) return;
-    bloc.add(ClaimReviewed(id: claim.id ?? '', status: chosen));
+  if (chosen == null || !context.mounted) return;
+
+  String? comments;
+  if (chosen.isRejected) {
+    comments = await _askRejectionReason(context);
+    if (comments == null) return;
   }
+  bloc.add(
+    ClaimReviewed(id: claim.id ?? '', status: chosen, comments: comments),
+  );
+}
+
+Future<String?> _askRejectionReason(BuildContext context) async {
+  final controller = TextEditingController();
+
+  final reason = await showDialog<String>(
+    useSafeArea: true,
+    context: context,
+    fullscreenDialog: false,
+    builder: (context) => AlertDialog(
+      title: const Text('Reason for rejection'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppTextField(
+            controller: controller,
+            maxLines: 3,
+            maxLength: 200,
+            hintText: "Bill missing, amount exceeds policy, not work related…",
+            fieldType: FieldType.multiline,
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        FilledButton(
+          onPressed: () {
+            final text = controller.text.trim();
+            Navigator.of(context).pop(text.isEmpty ? null : text);
+          },
+          child: const Text('Reject'),
+        ),
+      ],
+    ),
+  );
+
+  controller.dispose();
+  return reason;
+}

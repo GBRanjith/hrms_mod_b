@@ -42,12 +42,21 @@ class ClaimItem extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                subtitle: (claim.description?.isNotEmpty == true)
-                    ? Text(
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (claim.description?.isNotEmpty == true)
+                      Text(
                         claim.description ?? '-',
                         style: Theme.of(context).textTheme.bodyLarge,
-                      )
-                    : null,
+                      ),
+                    if (claim.reviewComments?.isNotEmpty == true)
+                      Text(
+                        "Reject Reason: ${claim.reviewComments ?? '-'}",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                  ],
+                ),
                 trailing: Text(
                   claim.amount?.formatAmount() ?? "-",
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(

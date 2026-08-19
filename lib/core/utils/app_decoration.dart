@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hrms_mod_b/core/theme/app_scaling.dart';
 
-/// Reusable decorations for the app
 class AppDecoration {
   AppDecoration._();
 

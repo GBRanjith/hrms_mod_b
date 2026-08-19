@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/router/route_names.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_scaling.dart';
-import '../../../../core/utils/app_decoratoin.dart';
+import '../../../../core/utils/app_decoration.dart';
 import '../../../../core/utils/extension.dart';
 import '../../../../core/widgets/app_error_widget.dart';
 import '../../../../core/widgets/logout_button.dart';

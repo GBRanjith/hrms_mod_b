@@ -1,4 +1,4 @@
-import '../../../employee/domine/enum/department_enum.dart';
+import '../../domain/enum/department_enum.dart';
 
 abstract class EmployeeEvent {}
 

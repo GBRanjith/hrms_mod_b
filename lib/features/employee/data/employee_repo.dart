@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import '../../../core/storage/hive_boxes.dart';
-import '../domine/enum/department_enum.dart';
+import '../domain/enum/department_enum.dart';
 import 'models/employee_model.dart';
 
 class EmployeeRepository {

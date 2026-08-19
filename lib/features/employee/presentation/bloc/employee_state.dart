@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import '../../../../core/enums/status.dart';
 import '../../data/models/employee_model.dart';
-import '../../domine/enum/department_enum.dart';
+import '../../domain/enum/department_enum.dart';
 
 class EmployeeState extends Equatable {
   final Status status;

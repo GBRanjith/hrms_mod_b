@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 import '../../../../core/storage/hive_typeids.dart';
-import '../../domine/enum/department_enum.dart';
+import '../../domain/enum/department_enum.dart';
 
 part 'employee_model.g.dart';
 

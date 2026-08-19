@@ -5,7 +5,7 @@ import '../../../../core/widgets/app_filter_chips.dart';
 import '../bloc/claim_bloc.dart';
 import '../bloc/claim_event.dart';
 import '../bloc/claim_state.dart';
-import '../../domine/enums/claim_status_enum.dart';
+import '../../domain/enums/claim_status_enum.dart';
 
 class ClaimStatusFilter extends StatelessWidget {
   const ClaimStatusFilter({super.key});

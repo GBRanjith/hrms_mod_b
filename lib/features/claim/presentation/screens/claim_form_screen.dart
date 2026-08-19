@@ -8,7 +8,7 @@ import 'package:hrms_mod_b/core/widgets/app_textfield.dart';
 import '../../../../app/router/route_names.dart';
 import '../../../../core/theme/app_scaling.dart';
 import '../../../../core/utils/extension.dart';
-import '../../domine/enums/expense_category_enum.dart';
+import '../../domain/enums/expense_category_enum.dart';
 import '../form_bloc.dart/claim_form_bloc.dart';
 import '../form_bloc.dart/claim_form_event.dart';
 import '../form_bloc.dart/claim_form_state.dart';

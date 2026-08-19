@@ -4,7 +4,7 @@ import 'package:hrms_mod_b/core/widgets/app_textfield.dart';
 import 'package:hrms_mod_b/features/claim/presentation/widgets/claim_status_ui.dart';
 import '../../../../core/theme/app_scaling.dart';
 import '../../data/models/claim_model.dart';
-import '../../domine/enums/claim_status_enum.dart';
+import '../../domain/enums/claim_status_enum.dart';
 import '../bloc/claim_bloc.dart';
 import '../bloc/claim_event.dart';
 

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../../domine/enums/expense_category_enum.dart';
+import '../../domain/enums/expense_category_enum.dart';
 
 abstract class ClaimFormEvent {}
 

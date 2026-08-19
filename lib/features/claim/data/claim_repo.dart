@@ -5,7 +5,7 @@ import '../../../core/enums/status.dart';
 import '../../../core/storage/hive_boxes.dart';
 import '../../../core/storage/preference_service.dart';
 import '../../../core/utils/repo_response_model.dart';
-import '../domine/enums/claim_status_enum.dart';
+import '../domain/enums/claim_status_enum.dart';
 import 'models/claim_model.dart';
 
 class ClaimRepository {

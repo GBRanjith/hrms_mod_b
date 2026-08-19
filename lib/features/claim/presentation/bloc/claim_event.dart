@@ -1,6 +1,6 @@
 import '../../../../core/enums/sort_enum.dart';
 import '../../data/models/claim_model.dart';
-import '../../domine/enums/claim_status_enum.dart';
+import '../../domain/enums/claim_status_enum.dart';
 
 abstract class ClaimEvent {}
 

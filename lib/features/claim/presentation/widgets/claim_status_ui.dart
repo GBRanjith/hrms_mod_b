@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domine/enums/claim_status_enum.dart';
+import '../../domain/enums/claim_status_enum.dart';
 
 extension ClaimStatusUi on ClaimStatus {
   IconData get icon => switch (this) {

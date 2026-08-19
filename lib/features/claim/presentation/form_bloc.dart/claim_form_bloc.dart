@@ -6,7 +6,7 @@ import '../../../../core/storage/preference_service.dart';
 import '../../../../core/storage/receipt_storage.dart';
 import '../../data/claim_repo.dart';
 import '../../data/models/claim_model.dart';
-import '../../domine/enums/expense_category_enum.dart';
+import '../../domain/enums/expense_category_enum.dart';
 import 'claim_form_event.dart';
 import 'claim_form_state.dart';
 

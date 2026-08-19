@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hrms_mod_b/core/storage/preference_service.dart';
 import 'package:hrms_mod_b/core/theme/app_scaling.dart';
-import 'package:hrms_mod_b/core/utils/app_decoratoin.dart';
+import 'package:hrms_mod_b/core/utils/app_decoration.dart';
 import 'package:hrms_mod_b/core/utils/date_extension.dart';
 import 'package:hrms_mod_b/features/employee/data/models/employee_model.dart';
 

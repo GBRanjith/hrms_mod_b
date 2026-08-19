@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hrms_mod_b/core/utils/date_extension.dart';
 import 'package:hrms_mod_b/core/utils/extension.dart';
-import 'package:hrms_mod_b/features/claim/domine/enums/expense_category_enum.dart';
+import 'package:hrms_mod_b/features/claim/domain/enums/expense_category_enum.dart';
 import 'package:hrms_mod_b/features/claim/presentation/widgets/claim_status_ui.dart';
 import '../../../../core/theme/app_scaling.dart';
 import '../../data/models/claim_model.dart';
-import '../../domine/enums/claim_status_enum.dart';
+import '../../domain/enums/claim_status_enum.dart';
 
 class ClaimItem extends StatelessWidget {
   const ClaimItem({

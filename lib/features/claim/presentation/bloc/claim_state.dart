@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import '../../../../core/enums/sort_enum.dart';
 import '../../../../core/enums/status.dart';
 import '../../data/models/claim_model.dart';
-import '../../domine/enums/claim_status_enum.dart';
+import '../../domain/enums/claim_status_enum.dart';
 
 class ClaimState extends Equatable {
   final Status status;

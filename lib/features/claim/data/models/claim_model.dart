@@ -1,8 +1,8 @@
 import 'package:hive/hive.dart';
 
 import '../../../../core/storage/hive_typeids.dart';
-import '../../domine/enums/claim_status_enum.dart';
-import '../../domine/enums/expense_category_enum.dart';
+import '../../domain/enums/claim_status_enum.dart';
+import '../../domain/enums/expense_category_enum.dart';
 
 part 'claim_model.g.dart';
 

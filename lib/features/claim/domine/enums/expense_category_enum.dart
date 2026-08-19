@@ -2,12 +2,14 @@ enum ExpenseCategory {
   travel,
   food,
   accommodation,
+  clientVisit,
   other;
 
   String get storageValue => switch (this) {
     ExpenseCategory.travel => 'travel',
     ExpenseCategory.food => 'food',
     ExpenseCategory.accommodation => 'accommodation',
+    ExpenseCategory.clientVisit => 'client_visit',
     ExpenseCategory.other => 'other',
   };
 
@@ -16,6 +18,7 @@ enum ExpenseCategory {
     ExpenseCategory.travel => 'Travel',
     ExpenseCategory.food => 'Food',
     ExpenseCategory.accommodation => 'Accommodation',
+    ExpenseCategory.clientVisit => 'Client Visit',
     ExpenseCategory.other => 'Other',
   };
 

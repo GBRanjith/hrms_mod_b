@@ -20,6 +20,7 @@ class AppTextField extends StatelessWidget {
   final int? maxLength;
   final int? maxLines;
   final bool isRequired;
+  final void Function()? onTap;
 
   const AppTextField({
     super.key,
@@ -37,6 +38,7 @@ class AppTextField extends StatelessWidget {
     this.maxLength,
     this.maxLines,
     this.isRequired = false,
+    this.onTap,
   });
 
   @override
@@ -78,27 +80,31 @@ class AppTextField extends StatelessWidget {
           onTapOutside: (_) {
             FocusManager.instance.primaryFocus?.unfocus();
           },
+          onTap: onTap,
           decoration: InputDecoration(
             hintText: hintText,
+            hintStyle: TextStyle(
+              color: colorScheme.onPrimaryContainer.withValues(alpha: .3),
+            ),
             filled: true,
             isDense: true,
-            fillColor: colorScheme.surfaceContainerHighest,
+            fillColor: colorScheme.surfaceContainer,
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadius.radius8),
-              borderSide: BorderSide(color: colorScheme.primaryContainer),
+              borderSide: BorderSide(color: colorScheme.surfaceContainer),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadius.radius8),
               borderSide: BorderSide(
-                color: colorScheme.onPrimaryContainer.withValues(alpha: .4),
+                color: colorScheme.onPrimaryContainer.withValues(alpha: .3),
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadius.radius8),
               borderSide: BorderSide(
-                color: colorScheme.onPrimaryContainer.withValues(alpha: .4),
+                color: colorScheme.onPrimaryContainer.withValues(alpha: .3),
               ),
             ),
           ),

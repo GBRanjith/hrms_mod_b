@@ -39,3 +39,10 @@ class ClaimDeleted extends ClaimEvent {
   final String id;
   ClaimDeleted(this.id);
 }
+
+class ClaimReviewed extends ClaimEvent {
+  final String id;
+  final ClaimStatus status;
+  final String? comments;
+  ClaimReviewed({required this.id, required this.status, this.comments});
+}

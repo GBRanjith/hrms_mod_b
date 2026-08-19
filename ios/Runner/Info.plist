@@ -66,5 +66,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+      <key>NSCameraUsageDescription</key>
+      <string>Take a photo of your bill or receipt to attach it to an expense claim.</string>
+      <key>NSPhotoLibraryUsageDescription</key>
+      <string>Choose a saved bill or receipt image to attach to an expense claim.</string>
 </dict>
 </plist>

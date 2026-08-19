@@ -108,4 +108,27 @@ class ClaimModel extends HiveObject {
       createdAt: createdAt ?? this.createdAt,
     );
   }
+
+  ClaimModel withReview({
+    required ClaimStatus status,
+    String? reviewerId,
+    String? comments,
+  }) {
+    final isPending = status.isPending;
+
+    return ClaimModel(
+      id: id,
+      employeeId: employeeId,
+      description: description,
+      amount: amount,
+      date: date,
+      category: category,
+      status: status,
+      receiptFileName: receiptFileName,
+      reviewerId: isPending ? null : reviewerId,
+      reviewDate: isPending ? null : DateTime.now(),
+      reviewComments: isPending ? null : comments,
+      createdAt: createdAt,
+    );
+  }
 }

@@ -17,6 +17,7 @@ class ClaimBloc extends Bloc<ClaimEvent, ClaimState> {
     on<ClaimCreated>(_onCreated);
     on<ClaimUpdated>(_onUpdated);
     on<ClaimDeleted>(_onDeleted);
+    on<ClaimReviewed>(_onReviewed);
 
     _watchClaims();
   }
@@ -182,6 +183,18 @@ class ClaimBloc extends Bloc<ClaimEvent, ClaimState> {
         ),
       );
     }
+  }
+
+  Future<void> _onReviewed(
+    ClaimReviewed event,
+    Emitter<ClaimState> emit,
+  ) async {
+    final result = await ClaimRepository.reviewClaim(
+      claimId: event.id,
+      status: event.status,
+      comments: event.comments,
+    );
+    emit(state.copyWith(message: result.message));
   }
 
   @override

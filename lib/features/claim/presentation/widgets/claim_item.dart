@@ -1,74 +1,89 @@
 import 'package:flutter/material.dart';
-
+import 'package:hrms_mod_b/core/utils/date_extension.dart';
+import 'package:hrms_mod_b/core/utils/extension.dart';
+import 'package:hrms_mod_b/features/claim/domine/enums/expense_category_enum.dart';
+import 'package:hrms_mod_b/features/claim/presentation/widgets/claim_status_ui.dart';
 import '../../../../core/theme/app_scaling.dart';
 import '../../data/models/claim_model.dart';
+import '../../domine/enums/claim_status_enum.dart';
 
 class ClaimItem extends StatelessWidget {
-  const ClaimItem({super.key, required this.claim});
+  const ClaimItem({
+    super.key,
+    required this.claim,
+    required this.onTap,
+    required this.onLongPress,
+  });
 
   final ClaimModel claim;
+  final void Function()? onTap;
+  final void Function()? onLongPress;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: AppScaling.space8),
-      child: Padding(
-        padding: const EdgeInsets.all(AppScaling.space12),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const CircleAvatar(child: Icon(Icons.receipt_long)),
-                const SizedBox(width: AppScaling.space12),
-
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        claim.description ?? 'Expense Claim',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        claim.category?.label ?? '',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ],
+    return InkWell(
+      onTap: onTap,
+      onLongPress: onLongPress,
+      child: Card(
+        margin: const EdgeInsets.only(bottom: AppScaling.space8),
+        child: Padding(
+          padding: const EdgeInsets.all(AppScaling.space12),
+          child: Column(
+            children: [
+              ListTile(
+                dense: true,
+                contentPadding: EdgeInsets.all(0),
+                leading: CircleAvatar(
+                  child: _buildAvatar(claim.category ?? ExpenseCategory.other),
+                ),
+                title: Text(
+                  claim.category?.label ?? '-',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-
-                Text(
-                  '₹${claim.amount?.toStringAsFixed(2) ?? '0.00'}',
-                  style: Theme.of(context).textTheme.titleMedium,
+                subtitle: (claim.description?.isNotEmpty == true)
+                    ? Text(
+                        claim.description ?? '-',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      )
+                    : null,
+                trailing: Text(
+                  claim.amount?.formatAmount() ?? "-",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ],
-            ),
-
-            const Divider(),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  _formatDate(claim.date),
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-              ],
-            ),
-          ],
+                titleAlignment: ListTileTitleAlignment.top,
+              ),
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    claim.date?.toShortDate ?? "-",
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
+                  Spacer(),
+                  StatusChip(status: claim.status ?? ClaimStatus.pending),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  String _formatDate(DateTime? date) {
-    if (date == null) return '-';
+  Widget _buildAvatar(ExpenseCategory category) {
+    final icon = switch (category) {
+      ExpenseCategory.travel => Icons.flight,
+      ExpenseCategory.food => Icons.restaurant,
+      ExpenseCategory.accommodation => Icons.hotel,
+      ExpenseCategory.clientVisit => Icons.business,
+      ExpenseCategory.other => Icons.receipt_long,
+    };
 
-    return '${date.day.toString().padLeft(2, '0')}/'
-        '${date.month.toString().padLeft(2, '0')}/'
-        '${date.year}';
+    return CircleAvatar(child: Icon(icon));
   }
 }

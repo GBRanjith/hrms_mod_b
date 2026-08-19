@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/claim/presentation/screens/claim_form_screen.dart';
 import '../../features/employee/data/models/employee_model.dart';
 import '../../features/employee/presentation/screens/employee_detail_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
@@ -38,6 +39,17 @@ abstract final class AppRouter {
         name: RouteNames.directoryDetail,
         builder: (context, state) =>
             EmployeeDetailScreen(employee: state.extra as EmployeeModel),
+      ),
+      GoRoute(
+        path: RoutePaths.createClaim,
+        name: RouteNames.createClaim,
+        builder: (context, state) => const ClaimFormScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.editClaim,
+        name: RouteNames.editClaim,
+        builder: (context, state) =>
+            ClaimFormScreen(claimId: state.pathParameters['id']),
       ),
     ],
   );

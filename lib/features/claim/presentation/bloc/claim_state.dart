@@ -37,6 +37,7 @@ class ClaimState extends Equatable {
     );
   }
 
+  bool get hasFilters => search.isNotEmpty || claimStatus != null;
   ClaimState copyWith({
     Status? status,
     String? message,

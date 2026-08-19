@@ -20,6 +20,7 @@ class ClaimStatusFilter extends StatelessWidget {
           items: ClaimStatus.values,
           selected: state.claimStatus,
           labelOf: (item) => item.label,
+          removeAll: true,
           onSelected: (status) {
             context.read<ClaimBloc>().add(ClaimStatusSelected(status));
           },

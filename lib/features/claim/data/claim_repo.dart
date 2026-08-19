@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 import '../../../core/enums/sort_enum.dart';
 import '../../../core/enums/status.dart';
 import '../../../core/storage/hive_boxes.dart';
+import '../../../core/storage/preference_service.dart';
 import '../../../core/utils/repo_response_model.dart';
 import '../domine/enums/claim_status_enum.dart';
 import 'models/claim_model.dart';
@@ -46,6 +47,8 @@ class ClaimRepository {
 
     return claims.skip(start).take(limit ?? claims.length).toList();
   }
+
+  static ClaimModel? getClaimById(String id) => _claimBox.get(id);
 
   static Future<RepoResult> createClaim(ClaimModel input) async {
     final id = const Uuid().v4();
@@ -92,6 +95,31 @@ class ClaimRepository {
     return RepoResult(
       status: Status.success,
       message: 'Claim updated successfully',
+    );
+  }
+
+  static Future<RepoResult> reviewClaim({
+    required String claimId,
+    required ClaimStatus status,
+    String? comments,
+  }) async {
+    final existing = _claimBox.get(claimId);
+
+    if (existing == null) {
+      return RepoResult(status: Status.failure, message: 'Claim not found');
+    }
+
+    await _claimBox.put(
+      claimId,
+      existing.withReview(
+        status: status,
+        reviewerId: PreferenceService.employeeId,
+        comments: comments,
+      ),
+    );
+    return RepoResult(
+      status: Status.success,
+      message: 'Claim marked ${status.label.toLowerCase()}',
     );
   }
 
